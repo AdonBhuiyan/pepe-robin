@@ -1,0 +1,624 @@
+/* --- Fonts (move to main.css if already declared there) ------------------ */
+@font-face {
+  font-family: "Bangers";
+  src: url("../../fonts/Bangers-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cinzel Decorative";
+  src: url("../../fonts/CinzelDecorative-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Tokens (move to :root in main.css if you prefer) -------------------- */
+:root {
+  --bg: #0e1a12;
+  --card: #16271b;
+  --green: #2e7d32;
+  --neon: #39ff14;
+  --gold: #d4a017;
+  --gold-light: #f6d365;
+  --red: #d62828;
+  --text: #f5f1e6;
+
+  --font-display: "Bangers", Impact, system-ui, sans-serif;
+  --font-fancy: "Cinzel Decorative", Georgia, serif;
+  --font-body: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-out: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --ease-io: cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 110px; /* fixed header never covers section titles */
+}
+html.nav-open {
+  overflow: hidden; /* lock page scroll while mobile menu is open */
+}
+
+/* ==========================================================================
+   HEADER SHELL (mobile first)
+   ========================================================================== */
+.site-header {
+  --logo-h: 64px;
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 1000;
+  padding-top: env(safe-area-inset-top, 0px);
+  font-family: var(--font-body);
+}
+
+/* soft dark fade so the menu stays readable over the hero image */
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 -24px 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 26, 18, 0.85),
+    rgba(14, 26, 18, 0)
+  );
+  transition: opacity 0.35s ease;
+}
+
+/* frosted glass bar, shown after scrolling.
+   (a pseudo-element on purpose: backdrop-filter on the header itself would
+   trap the fixed mobile overlay inside the header) */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: rgba(14, 26, 18, 0.82);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 2px solid rgba(212, 160, 23, 0.45);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.35s ease;
+}
+.site-header.is-scrolled {
+  --logo-h: 52px;
+}
+.site-header.is-scrolled::before {
+  opacity: 1;
+}
+.site-header.is-scrolled::after {
+  opacity: 0;
+}
+
+/* scroll progress line (gold → neon green) */
+.site-header__progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold), var(--neon));
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.6);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.site-header__bar {
+  position: relative; /* no z-index: keeps overlay + logo in the header's stacking context */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 1720px;
+  margin-inline: auto;
+  padding: 0.9rem max(1rem, env(safe-area-inset-right)) 0.9rem
+    max(1rem, env(safe-area-inset-left));
+  transition: padding 0.35s ease;
+}
+.site-header.is-scrolled .site-header__bar {
+  padding-block: 0.5rem;
+}
+
+/* ==========================================================================
+   LOGO
+   ========================================================================== */
+.logo {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 14px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.5);
+}
+.logo img {
+  display: block;
+  width: auto;
+  height: var(--logo-h);
+  max-width: calc(
+    100vw - 6.5rem
+  ); /* never collides with the hamburger on tiny phones */
+  object-fit: contain;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.65))
+    drop-shadow(0 0 14px rgba(212, 160, 23, 0.25));
+  transition:
+    height 0.35s var(--ease-out),
+    filter 0.35s ease;
+}
+.logo:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   HAMBURGER  ⇄  CROSS  (mobile)
+   ========================================================================== */
+.nav-toggle {
+  --toggle-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  position: relative;
+  z-index: 2;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  color: var(--gold);
+  font: inherit;
+  border: 2px solid currentColor;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #1f3826, var(--card));
+  box-shadow: var(--toggle-shadow);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 0.3s var(--ease-out),
+    color 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+  animation: toggle-pulse 2.6s ease-out infinite;
+}
+.nav-toggle[aria-expanded="true"] {
+  color: var(--red);
+  background: linear-gradient(145deg, #2a1a1a, var(--card));
+  animation: none;
+  box-shadow:
+    0 0 22px rgba(214, 40, 40, 0.45),
+    var(--toggle-shadow);
+}
+.nav-toggle:active {
+  transform: scale(0.92);
+}
+
+.nav-toggle__bars {
+  position: relative;
+  display: block;
+  width: 30px;
+  height: 22px;
+}
+.nav-toggle__bars span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background: currentColor;
+  transform-origin: center;
+  transition:
+    transform 0.45s var(--ease-io),
+    top 0.45s var(--ease-io),
+    opacity 0.25s ease,
+    width 0.3s ease;
+}
+.nav-toggle__bars span:nth-child(1) {
+  top: 0;
+}
+.nav-toggle__bars span:nth-child(2) {
+  top: 9px;
+  width: 70%;
+  left: auto;
+  right: 0;
+}
+.nav-toggle__bars span:nth-child(3) {
+  top: 18px;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(1) {
+  top: 9px;
+  transform: rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(3) {
+  top: 9px;
+  transform: rotate(-45deg);
+}
+
+@keyframes toggle-pulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(212, 160, 23, 0.55),
+      var(--toggle-shadow);
+  }
+  70%,
+  100% {
+    box-shadow:
+      0 0 0 18px rgba(212, 160, 23, 0),
+      var(--toggle-shadow);
+  }
+}
+
+/* ==========================================================================
+   MOBILE MENU OVERLAY
+   ========================================================================== */
+.site-nav {
+  --origin-x: calc(100% - 2.9rem);
+  --origin-y: 2.9rem;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: calc(7.5rem + env(safe-area-inset-top, 0px)) 1.5rem
+    calc(2rem + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background:
+    radial-gradient(
+      120% 60% at 50% 0%,
+      rgba(46, 125, 50, 0.4),
+      transparent 62%
+    ),
+    radial-gradient(
+      90% 55% at 50% 100%,
+      rgba(212, 160, 23, 0.2),
+      transparent 65%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(212, 160, 23, 0.045) 0 2px,
+      transparent 2px 28px
+    ),
+    linear-gradient(180deg, #0e1a12, #08110b);
+
+  /* closed: circle collapsed into the hamburger button */
+  visibility: hidden;
+  pointer-events: none;
+  clip-path: circle(0px at var(--origin-x) var(--origin-y));
+  transition:
+    clip-path 0.6s var(--ease-io),
+    visibility 0s linear 0.6s;
+}
+.site-nav.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  clip-path: circle(150vmax at var(--origin-x) var(--origin-y));
+  transition:
+    clip-path 0.75s var(--ease-io),
+    visibility 0s;
+}
+
+.site-nav__list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.35rem, 2.2vh, 1.1rem);
+  width: 100%;
+  margin: auto; /* vertical + horizontal centering, safe on short screens */
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+/* staggered entrance */
+.site-nav__item {
+  opacity: 0;
+  transform: translateY(46px) scale(0.94);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+.site-nav.is-open .site-nav__item {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s ease,
+    transform 0.7s var(--ease-out);
+  transition-delay: calc(0.22s + var(--i, 0) * 0.08s);
+}
+
+.site-nav__link {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 64px;
+  padding: 0.05em 0.6em 0.14em;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 14vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-decoration: none;
+  text-shadow: 0 4px 0 rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color 0.3s ease,
+    transform 0.3s var(--ease-out),
+    text-shadow 0.3s ease;
+}
+.site-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0.6em;
+  right: 0.6em;
+  bottom: 0.02em;
+  height: 0.1em;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--gold), var(--neon));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s var(--ease-io);
+}
+.site-nav__sub {
+  margin-top: -0.1rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 3.8vw, 1.2rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--neon);
+  opacity: 0.9;
+}
+
+.site-nav__link:active,
+.site-nav__link:focus-visible,
+.site-nav__link.is-active {
+  color: var(--gold-light);
+  text-shadow:
+    0 0 26px rgba(212, 160, 23, 0.7),
+    0 4px 0 rgba(0, 0, 0, 0.55);
+}
+.site-nav__link:active::after,
+.site-nav__link:focus-visible::after,
+.site-nav__link.is-active::after {
+  transform: scaleX(1);
+}
+@media (hover: hover) {
+  .site-nav__link:hover {
+    color: var(--gold-light);
+    text-shadow:
+      0 0 26px rgba(212, 160, 23, 0.7),
+      0 4px 0 rgba(0, 0, 0, 0.55);
+    transform: scale(1.05);
+  }
+  .site-nav__link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.site-nav__tagline {
+  margin: 1.5rem 0 0;
+  font-family: var(--font-fancy);
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  letter-spacing: 0.05em;
+  text-align: center;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.site-nav.is-open .site-nav__tagline {
+  opacity: 0.95;
+  transition: opacity 0.6s ease 0.7s;
+}
+
+/* keyboard focus ring for everything */
+.logo:focus-visible,
+.nav-toggle:focus-visible,
+.site-nav__link:focus-visible {
+  outline: 3px solid var(--neon);
+  outline-offset: 4px;
+  border-radius: 16px;
+}
+
+/* screen-reader-only helper */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   DESKTOP  (>= 992px)
+   ========================================================================== */
+@media (min-width: 992px) {
+  .site-header {
+    --logo-h: 88px;
+  }
+  .site-header.is-scrolled {
+    --logo-h: 68px;
+  }
+  .site-header__bar {
+    padding-inline: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  /* logo hover: pop + gold glow */
+  .logo:hover {
+    transform: scale(1.06) rotate(-1.5deg);
+  }
+  .logo:hover img {
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.7))
+      drop-shadow(0 0 22px rgba(212, 160, 23, 0.75));
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  /* overlay → inline menu */
+  .site-nav,
+  .site-nav.is-open {
+    position: static;
+    inset: auto;
+    z-index: auto;
+    display: block;
+    margin-left: auto;
+    padding: 0;
+    overflow: visible;
+    background: none;
+    visibility: visible;
+    pointer-events: auto;
+    clip-path: none;
+    transition: none;
+  }
+  .site-nav__tagline {
+    display: none;
+  }
+  .site-nav__list {
+    flex-direction: row;
+    gap: 0.5rem;
+    width: auto;
+    margin: 0;
+  }
+  .site-nav__item,
+  .site-nav.is-open .site-nav__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .site-nav__link {
+    flex-direction: row;
+    min-height: 0;
+    padding: 0.4em 0.85em 0.45em;
+    font-size: clamp(1.6rem, 2.2vw, 2.4rem);
+    border-radius: 999px;
+    text-shadow: 0 3px 0 rgba(0, 0, 0, 0.5);
+  }
+  /* "(formerly Twitter)" stays available to screen readers, hidden visually */
+  .site-nav__sub {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* X + Telegram get a gold outline so they read as buttons */
+  .site-nav__item--social .site-nav__link {
+    box-shadow: inset 0 0 0 2px rgba(212, 160, 23, 0.6);
+  }
+  .site-nav__item--social:nth-child(4) {
+    margin-left: 0.75rem;
+  }
+
+  /* hover: gold pill grows from the centre, comic 3D drop + glow */
+  .site-nav__link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      var(--gold-light),
+      var(--gold) 55%,
+      #b07d0c
+    );
+    box-shadow:
+      0 4px 0 #6f5006,
+      0 12px 32px rgba(212, 160, 23, 0.55);
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 0.25s ease,
+      transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+  }
+  /* active-section marker: little red ♦ (echoes the ticker) */
+  .site-nav__link::after {
+    left: 50%;
+    right: auto;
+    bottom: -0.05em;
+    width: 0.38em;
+    height: 0.38em;
+    border-radius: 2px;
+    background: var(--red);
+    box-shadow: 0 0 14px rgba(214, 40, 40, 0.8);
+    transform: translateX(-50%) rotate(45deg) scale(0);
+    transform-origin: center;
+    transition:
+      transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.6),
+      opacity 0.2s ease;
+  }
+  .site-nav__link.is-active {
+    color: var(--gold-light);
+    text-shadow:
+      0 0 24px rgba(212, 160, 23, 0.6),
+      0 3px 0 rgba(0, 0, 0, 0.5);
+  }
+  .site-nav__link.is-active::after {
+    transform: translateX(-50%) rotate(45deg) scale(1);
+  }
+
+  .site-nav__link:hover,
+  .site-nav__link:focus-visible {
+    color: var(--bg);
+    text-shadow: none;
+    transform: translateY(-4px);
+  }
+  .site-nav__link:hover::before,
+  .site-nav__link:focus-visible::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .site-nav__link:hover::after,
+  .site-nav__link:focus-visible::after {
+    opacity: 0;
+  }
+  .site-nav__link:active {
+    transform: translateY(0) scale(0.96);
+  }
+  .site-nav__link:focus-visible {
+    outline-offset: 3px;
+    border-radius: 999px;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .site-header,
+  .site-header *,
+  .site-header *::before,
+  .site-header *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}

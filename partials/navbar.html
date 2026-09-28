@@ -1,0 +1,64 @@
+<header class="site-header" data-site-header>
+  <div class="site-header__bar">
+    <a class="logo" href="/" data-logo>
+      <img
+        src="https://peperobin.com/assets/images/mobile/logos/logo.webp"
+        alt="Pepe the Robinhood – home"
+        width="280"
+        height="96"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </a>
+
+    <!-- HAMBURGER / CROSS (mobile only) -->
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-nav-toggle
+    >
+      <span class="nav-toggle__bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+
+    <!-- MENU: full-screen overlay on mobile, inline on desktop -->
+    <nav
+      class="site-nav"
+      id="site-nav"
+      aria-label="Main navigation"
+      data-site-nav
+    >
+      <ul class="site-nav__list">
+        <li class="site-nav__item" style="--i: 0">
+          <a class="site-nav__link" href="#story">Story</a>
+        </li>
+        <li class="site-nav__item" style="--i: 1">
+          <a class="site-nav__link" href="#tokenomics">Tokenomics</a>
+        </li>
+        <li class="site-nav__item" style="--i: 2">
+          <a class="site-nav__link" href="#memes">Memes</a>
+        </li>
+        <!-- Swap #x and #telegram for your real links, then add target="_blank" rel="noopener noreferrer" -->
+        <li class="site-nav__item site-nav__item--social" style="--i: 3">
+          <a class="site-nav__link" href="https://x.com/home" target="_blank"
+            >X <span class="site-nav__sub">(formerly Twitter)</span></a
+          >
+        </li>
+        <li class="site-nav__item site-nav__item--social" style="--i: 4">
+          <a
+            class="site-nav__link"
+            href="https://web.telegram.org/a/"
+            target="_blank"
+            >Telegram</a
+          >
+        </li>
+      </ul>
+      <p class="site-nav__tagline">Take From the Rich. Give to the Degens 🏹</p>
+    </nav>
+  </div>
+  <span class="site-header__progress" aria-hidden="true"></span>
+</header>

@@ -1,0 +1,366 @@
+/* ================= HERO ================= */
+/* Mobile-first. One breakpoint only: 768px and up = desktop. */
+
+:root {
+  --pr-bg: #0e1a12;
+  --pr-card: #16271b;
+  --pr-green: #2e7d32;
+  --pr-neon: #39ff14;
+  --pr-gold: #d4a017;
+  --pr-red: #d62828;
+  --pr-text: #f5f1e6;
+
+  --font-display: "Bangers", "Impact", sans-serif;
+  --font-medieval: "Cinzel Decorative", "Georgia", serif;
+  --font-body: "Poppins", system-ui, sans-serif;
+
+  --nav-h: 84px; /* height of your fixed navbar on mobile  */
+  --hero-pos-mobile: 70% center; /* which part of the mobile banner stays visible */
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-start;
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + 2rem) 1.25rem 3rem;
+  overflow: hidden;
+  background: var(--pr-bg); /* shows while the banner loads */
+  color: var(--pr-text);
+  font-family: var(--font-body);
+}
+
+/* ---------- Background banner ---------- */
+.hero__bg,
+.hero__bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__bg {
+  z-index: -2;
+}
+
+.hero__bg img {
+  object-fit: cover;
+  object-position: var(--hero-pos-mobile);
+}
+
+/* Dark veil so text stays readable on top of the bright sunset */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgb(14 26 18 / 0.85) 0%,
+    rgb(14 26 18 / 0.35) 55%,
+    rgb(14 26 18 / 0.8) 100%
+  );
+  pointer-events: none;
+}
+
+/* ---------- Content ---------- */
+.hero__content {
+  width: 100%;
+  max-width: 62rem;
+  margin-inline: auto;
+}
+
+.hero__tagline {
+  margin: 0 0 1rem;
+  font-family: var(--font-medieval);
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  color: var(--pr-neon);
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.8);
+}
+
+.hero__title {
+  margin: 0 0 2rem;
+  font-family: var(--font-display);
+  font-weight: 400; /* Bangers only ships one weight */
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 1.02;
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+  color: var(--pr-text);
+  text-shadow:
+    0 0.05em 0 var(--pr-bg),
+    0 0.1em 0.4em rgb(0 0 0 / 0.65);
+}
+
+.hero__title-line {
+  display: block;
+}
+
+/* ---------- Buttons (shared) ---------- */
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 4.5rem; /* big tap target */
+  padding: 0.5rem 1.75rem;
+  border-radius: 1.1rem;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.btn:focus-visible {
+  outline: 4px solid var(--pr-text);
+  outline-offset: 4px;
+}
+
+/* Primary CTA: chunky neon "press-down" button */
+.btn--buy {
+  background: var(--pr-neon);
+  color: var(--pr-bg);
+  border: 3px solid var(--pr-bg);
+  box-shadow:
+    0 8px 0 var(--pr-green),
+    0 14px 32px rgb(57 255 20 / 0.45);
+  animation: hero-glow 2.4s ease-in-out infinite;
+}
+
+.btn--buy:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 11px 0 var(--pr-green),
+    0 18px 40px rgb(57 255 20 / 0.6);
+}
+
+.btn--buy:active {
+  transform: translateY(6px);
+  box-shadow:
+    0 2px 0 var(--pr-green),
+    0 6px 16px rgb(57 255 20 / 0.35);
+}
+
+.btn__fire {
+  width: 1.6em;
+  height: 1.6em;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ---------- "Coming soon!" tooltip on the buy button ---------- */
+.buy-wrap {
+  position: relative;
+  display: flex;
+}
+
+.buy-wrap .btn--buy {
+  flex: 1;
+}
+
+.tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 1.4rem);
+  z-index: 5;
+  padding: 0.7rem 1.5rem;
+  border: 3px solid var(--pr-bg);
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--pr-neon) 0%, var(--pr-gold) 100%);
+  color: var(--pr-bg);
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow:
+    0 6px 0 var(--pr-green),
+    0 12px 28px rgb(57 255 20 / 0.45);
+  pointer-events: none;
+
+  /* hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 10px) scale(0.8);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 0.2s ease,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    visibility 0s linear 0.3s;
+}
+
+/* little arrow pointing at the button */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: var(--pr-gold);
+  border-right: 3px solid var(--pr-bg);
+  border-bottom: 3px solid var(--pr-bg);
+  transform: translate(-50%, -55%) rotate(45deg);
+}
+
+/* shown: tap/click (JS adds .is-open), keyboard focus, or mouse hover */
+.buy-wrap.is-open .tooltip,
+.btn--buy:focus-visible + .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0) scale(1);
+  transition-delay: 0s;
+}
+
+@media (hover: hover) {
+  .buy-wrap:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0) scale(1);
+    transition-delay: 0s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip {
+    transition: opacity 0.01s;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Secondary: Telegram + X */
+.hero__socials {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.btn--social {
+  background: rgb(22 39 27 / 0.9);
+  color: var(--pr-text);
+  border: 3px solid var(--pr-gold);
+  box-shadow: 0 6px 0 rgb(212 160 23 / 0.45);
+  backdrop-filter: blur(6px);
+  font-size: 1.5rem;
+  padding-inline: 1rem;
+}
+
+.btn--social:hover {
+  background: var(--pr-gold);
+  color: var(--pr-bg);
+  transform: translateY(-3px);
+}
+
+.btn--social:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 rgb(212 160 23 / 0.45);
+}
+
+/* One attention-grabbing moment: soft pulse on the buy button */
+@keyframes hero-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgb(57 255 20 / 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px rgb(57 255 20 / 0.55));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn--buy {
+    animation: none;
+  }
+  .btn {
+    transition: none;
+  }
+}
+
+/* ================= DESKTOP (768px and up) ================= */
+@media (min-width: 768px) {
+  :root {
+    --nav-h: 112px;
+  }
+
+  .hero {
+    align-items: center;
+    /* top + bottom padding so the hero breathes and separates from the next section */
+    padding: calc(var(--nav-h) + 4rem) 4rem 7rem;
+  }
+
+  .hero__bg img {
+    object-position: center;
+  }
+
+  /* Veil moves to the left so Pepe on the right stays bright */
+  .hero::after {
+    background: linear-gradient(
+      90deg,
+      rgb(14 26 18 / 0.88) 0%,
+      rgb(14 26 18 / 0.5) 45%,
+      rgb(14 26 18 / 0) 75%
+    );
+  }
+
+  .hero__content {
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: 2rem;
+  }
+
+  .hero__tagline {
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+  }
+
+  .hero__title {
+    max-width: 14ch; /* keeps the text on the left, away from Pepe */
+    margin-bottom: 3rem;
+  }
+
+  .hero__actions {
+    align-items: flex-start;
+    gap: 1.75rem;
+  }
+
+  .btn {
+    min-height: 5.5rem;
+    padding-inline: 3rem;
+    font-size: 2.25rem;
+    border-radius: 1.4rem;
+  }
+
+  .hero__socials {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .tooltip {
+    bottom: calc(100% + 1.6rem);
+    padding: 0.9rem 2rem;
+    font-size: 2.25rem;
+  }
+
+  .btn--social {
+    font-size: 2rem;
+    padding-inline: 2.5rem;
+  }
+}

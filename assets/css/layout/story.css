@@ -1,0 +1,329 @@
+/* ================= THE STORY ================= */
+/* Mobile-first. One breakpoint: 768px and up = desktop.
+   Uses the brand variables from hero.css, with fallbacks. */
+
+.story {
+  --s-bg: var(--pr-bg, #0e1a12);
+  --s-card: var(--pr-card, #16271b);
+  --s-green: var(--pr-green, #2e7d32);
+  --s-neon: var(--pr-neon, #39ff14);
+  --s-gold: var(--pr-gold, #d4a017);
+  --s-text: var(--pr-text, #f5f1e6);
+  --s-display: var(--font-display, "Bangers", "Impact", sans-serif);
+  --s-medieval: var(--font-medieval, "Cinzel Decorative", "Georgia", serif);
+  --s-body: var(--font-body, "Poppins", system-ui, sans-serif);
+
+  position: relative;
+  padding: 4rem 1.25rem 5rem;
+  overflow-x: clip; /* clip (not hidden) so the sticky image still works */
+  background:
+    radial-gradient(45rem 30rem at 90% 12%, rgb(46 125 50 / 0.3), transparent 70%),
+    radial-gradient(40rem 30rem at 0% 70%, rgb(212 160 23 / 0.1), transparent 70%),
+    var(--s-bg);
+  color: var(--s-text);
+  font-family: var(--s-body);
+  scroll-margin-top: var(--nav-h, 84px);
+}
+
+/* ---------- Title ---------- */
+.story__title {
+  margin: 0 0 2.5rem;
+  text-align: center;
+  white-space: nowrap;
+  font-family: var(--s-display);
+  font-weight: 400;
+  font-size: 20vw; /* fills almost the whole mobile width */
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: var(--s-text);
+  text-shadow:
+    0 0.05em 0 var(--s-green),
+    0 0.1em 0 rgb(0 0 0 / 0.45),
+    0 0 0.6em rgb(57 255 20 / 0.25);
+}
+
+/* ---------- Layout ---------- */
+.story__grid {
+  display: grid;
+  gap: 3rem;
+}
+
+/* ---------- Image + golden moon ---------- */
+.story__figure {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: min(100%, 20rem);
+  margin: 0 auto;
+}
+
+.story__figure picture,
+.story__figure img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: contain;
+}
+
+.story__figure img {
+  filter: drop-shadow(0 1.25rem 1.5rem rgb(0 0 0 / 0.55));
+}
+
+/* the moon behind Pepe (a nod to "Then, one night…") */
+.story__halo {
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  width: 100%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 40% 30%,
+    rgb(247 233 176 / 0.9),
+    rgb(212 160 23 / 0.75) 50%,
+    rgb(46 125 50 / 0.55) 100%
+  );
+  box-shadow: 0 0 5rem rgb(57 255 20 / 0.3);
+}
+
+/* ---------- Text ---------- */
+.story__text {
+  font-size: 1.25rem;
+  line-height: 1.7;
+}
+
+:where(.story__text p) {
+  margin: 0 0 1.4rem;
+}
+
+.story__chapter {
+  margin-bottom: 3.5rem;
+}
+
+.story__chapter:last-child {
+  margin-bottom: 0;
+}
+
+.story__chapter-title {
+  margin: 0 0 1.5rem;
+  font-family: var(--s-medieval);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.25;
+  color: var(--s-gold);
+}
+
+.story__lead {
+  font-family: var(--s-display);
+  font-size: 2.25rem;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+}
+
+.story__accent {
+  margin-bottom: 0;
+  font-family: var(--s-display);
+  font-size: 2.75rem;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--s-neon);
+  text-shadow: 0 0 0.5em rgb(57 255 20 / 0.45);
+}
+
+/* the four short lines: green hood, feathered hat... */
+.story__poem {
+  margin: 0 0 1.75rem;
+  padding: 0 0 0 1.25rem;
+  list-style: none;
+  border-left: 4px solid var(--s-neon);
+}
+
+.story__poem li {
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.story__shout {
+  margin: 0.5rem 0 0;
+  font-family: var(--s-display);
+  font-size: 3.75rem;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--s-neon);
+  text-shadow:
+    0 0.05em 0 var(--s-green),
+    0 0 0.45em rgb(57 255 20 / 0.55);
+}
+
+/* the mission: three chunky bars, same language as the buttons */
+.story__mission {
+  display: grid;
+  gap: 1rem;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.story__mission li {
+  padding: 1rem 1.25rem;
+  border: 3px solid var(--s-gold);
+  border-radius: 1rem;
+  background: var(--s-card);
+  box-shadow: 0 6px 0 rgb(212 160 23 / 0.4);
+  font-family: var(--s-display);
+  font-size: 1.9rem;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+}
+
+.story__whisper {
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  border-block: 3px solid rgb(212 160 23 / 0.5);
+  text-align: center;
+  font-family: var(--s-medieval);
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.35;
+  color: var(--s-gold);
+}
+
+.story__whisper p {
+  margin: 0;
+}
+
+.story__big {
+  font-family: var(--s-display);
+  font-size: 2.6rem;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-wrap: balance;
+}
+
+.story__finale {
+  margin: 3rem 0 0;
+  font-family: var(--s-display);
+  font-size: 3.25rem;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-wrap: balance;
+  color: var(--s-gold);
+  text-shadow:
+    0 0.05em 0 rgb(0 0 0 / 0.5),
+    0 0 0.5em rgb(212 160 23 / 0.4);
+}
+
+/* ---------- Reading light (added by story.js) ----------
+   Lines start dim and light up as you scroll to them.
+   Without JS, everything stays fully visible. */
+.story.is-armed [data-line] {
+  opacity: 0.15;
+  transition: opacity 0.7s ease;
+}
+
+.story.is-armed [data-line].is-lit {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story.is-armed [data-line] {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* ================= DESKTOP (768px and up) ================= */
+@media (min-width: 768px) {
+  .story {
+    padding: 8rem 4rem 9rem;
+  }
+
+  .story__inner {
+    max-width: 96rem;
+    margin-inline: auto;
+  }
+
+  .story__title {
+    margin-bottom: 5rem;
+    font-size: clamp(7rem, 13vw, 15rem);
+  }
+
+  .story__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(3rem, 6vw, 7rem);
+    align-items: start;
+  }
+
+  /* image stays in view while the long story scrolls */
+  .story__figure {
+    position: sticky;
+    top: calc(var(--nav-h, 112px) + 2rem);
+    width: 100%;
+  }
+
+  .story__figure picture,
+  .story__figure img {
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100svh - var(--nav-h, 112px) - 4rem);
+  }
+
+  .story__halo {
+    width: 92%;
+  }
+
+  .story__text {
+    font-size: 1.5rem;
+  }
+
+  .story__chapter {
+    margin-bottom: 5rem;
+  }
+
+  .story__chapter-title {
+    margin-bottom: 2rem;
+    font-size: 2.25rem;
+  }
+
+  .story__lead {
+    font-size: 3.25rem;
+  }
+
+  .story__accent {
+    font-size: 3.75rem;
+  }
+
+  .story__poem {
+    padding-left: 1.75rem;
+  }
+
+  .story__poem li {
+    font-size: 1.75rem;
+  }
+
+  .story__shout {
+    font-size: 6rem;
+  }
+
+  .story__mission li {
+    padding: 1.25rem 1.75rem;
+    font-size: 2.5rem;
+  }
+
+  .story__whisper {
+    font-size: 2.5rem;
+  }
+
+  .story__big {
+    font-size: 3.75rem;
+  }
+
+  .story__finale {
+    font-size: 5rem;
+  }
+}

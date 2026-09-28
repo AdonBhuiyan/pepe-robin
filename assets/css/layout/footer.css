@@ -1,0 +1,233 @@
+/* ==========================================================
+   FOOTER
+   Everything is scoped under .footer so it never fights
+   with navbar.css (which also styles .site-nav).
+   ========================================================== */
+
+.footer {
+  --bg: #0e1a12;
+  --card: #16271b;
+  --green: #2e7d32;
+  --neon: #39ff14;
+  --gold: #d4a017;
+  --red: #d62828;
+  --text: #f5f1e6;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(72px, 8vw, 140px) clamp(20px, 5vw, 96px) 40px;
+  color: var(--text);
+  font-family: "Poppins", system-ui, sans-serif;
+  background:
+    radial-gradient(50% 60% at 15% 0%, rgba(46, 125, 50, 0.28), transparent 70%),
+    radial-gradient(40% 50% at 95% 100%, rgba(214, 40, 40, 0.14), transparent 70%),
+    #09120c;
+}
+
+.footer *,
+.footer *::before,
+.footer *::after { box-sizing: border-box; }
+
+/* gold rope along the top edge */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6px;
+  background: repeating-linear-gradient(90deg, var(--gold) 0 28px, #8a6a10 28px 40px);
+  box-shadow: 0 0 30px rgba(212, 160, 23, 0.5);
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: clamp(40px, 6vw, 120px);
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+/* ---------- Left: logo ---------- */
+.footer .logo {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.3, 1.5, 0.5, 1), filter 0.3s ease;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.55));
+}
+.footer .logo:hover { transform: rotate(-3deg) scale(1.06); filter: drop-shadow(0 0 30px rgba(57, 255, 20, 0.4)); }
+.footer .logo img { display: block; width: clamp(240px, 24vw, 420px); height: auto; }
+
+/* ---------- Right: nav + socials ---------- */
+.footer__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(32px, 3vw, 48px);
+  text-align: right;
+}
+
+/* neutralise any navbar.css behaviour (off-canvas, hidden, animated) */
+.footer .site-nav {
+  position: static;
+  inset: auto;
+  display: block;
+  width: auto;
+  height: auto;
+  padding: 0;
+  background: none;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.footer .site-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px clamp(28px, 3.5vw, 64px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer .site-nav__item {
+  margin: 0;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.footer .site-nav__link {
+  position: relative;
+  display: inline-block;
+  padding: 6px 0;
+  font-family: "Bangers", sans-serif;
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
+  letter-spacing: 0.05em;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer .site-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.footer .site-nav__link:hover { color: var(--gold); transform: translateY(-3px); }
+.footer .site-nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.footer .site-nav__sub {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  color: rgba(245, 241, 230, 0.6);
+}
+
+.footer .site-nav__tagline {
+  margin: clamp(20px, 2.5vw, 32px) 0 0;
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 1.9vw, 2rem);
+  line-height: 1.4;
+  color: var(--gold);
+  text-wrap: balance;
+}
+
+/* ---------- Social icons ---------- */
+.footer__socials {
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer .social {
+  display: grid;
+  place-items: center;
+  width: clamp(72px, 6vw, 92px);
+  aspect-ratio: 1;
+  color: var(--gold);
+  background: var(--card);
+  border: 3px solid var(--gold);
+  border-radius: 24px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s cubic-bezier(0.3, 1.5, 0.5, 1), color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.footer .social svg { width: 46%; height: 46%; }
+
+.footer .social:hover {
+  color: #0e1a12;
+  background: var(--neon);
+  border-color: var(--neon);
+  transform: translateY(-6px) rotate(-6deg);
+  box-shadow: 0 12px 0 rgba(0, 0, 0, 0.5), 0 0 36px rgba(57, 255, 20, 0.5);
+}
+.footer .social:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5); }
+
+.footer .social:focus-visible,
+.footer .site-nav__link:focus-visible,
+.footer .logo:focus-visible {
+  outline: 4px solid var(--neon);
+  outline-offset: 6px;
+  border-radius: 12px;
+}
+
+/* ---------- Bottom: legal ---------- */
+.footer__legal {
+  max-width: 1800px;
+  margin: clamp(56px, 6vw, 96px) auto 0;
+  padding-top: 32px;
+  border-top: 2px dashed rgba(212, 160, 23, 0.45);
+  display: grid;
+  gap: 16px;
+  text-align: center;
+}
+
+.footer__copy {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.footer__disclaimer {
+  margin: 0 auto;
+  max-width: 75ch;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.7;
+  color: rgba(245, 241, 230, 0.72);
+}
+.footer__disclaimer strong { color: var(--red); font-weight: 700; }
+
+/* ---------- Mobile: stacked + centered ---------- */
+@media (max-width: 767px) {
+  .footer { padding: 72px 16px 32px; }
+
+  .footer__inner { grid-template-columns: 1fr; justify-items: center; gap: 48px; }
+  .footer__right { align-items: center; text-align: center; }
+
+  .footer .site-nav__list { flex-direction: column; align-items: center; gap: 8px; }
+  .footer .site-nav__link { font-size: 3rem; padding: 8px 0; }
+  .footer .site-nav__sub { display: block; font-size: 1rem; }
+
+  .footer .site-nav__tagline { font-size: 1.6rem; }
+
+  .footer__socials { gap: 24px; }
+  .footer .social { width: 88px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer * { transition: none !important; animation: none !important; }
+}

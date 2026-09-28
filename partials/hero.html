@@ -1,0 +1,67 @@
+<!-- ================= HERO (paste inside <main>, right after the navbar) ================= -->
+<div>
+  <!-- Background banner: desktop image from 768px up, mobile image below -->
+  <picture class="hero__bg">
+    <source
+      media="(min-width: 768px)"
+      srcset="
+        https://peperobin.com/assets/images/desktop/backgrounds/banner.webp
+      "
+      type="image/webp"
+    />
+    <!-- Hero is above the fold, so NOT lazy-loaded. Set real width/height of your mobile banner. -->
+    <img
+      src="https://peperobin.com/assets/images/mobile/backgrounds/banner.webp"
+      alt=""
+      width="768"
+      height="1152"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+
+  <div class="hero__content">
+    <p class="hero__tagline">Take From the Rich. Give to the Degens 🏹</p>
+
+    <h1 class="hero__title" id="hero-title">
+      Pepe the Robinhood
+      <span class="hero__title-line">On Solana Chain.</span>
+    </h1>
+
+    <div class="hero__actions">
+      <!-- No link yet, so this is a <button>. When Pinksale goes live, swap it for an <a href="..."> -->
+      <div class="buy-wrap" data-buy-wrap>
+        <button class="btn btn--buy" type="button" aria-describedby="buy-tip">
+          <span>Buy From Pinksale</span>
+          <img
+            class="btn__fire"
+            src="https://peperobin.com/assets/images/fire.gif"
+            alt=""
+            width="64"
+            height="64"
+            decoding="async"
+          />
+        </button>
+        <span class="tooltip" id="buy-tip" role="tooltip">Coming soon!</span>
+      </div>
+
+      <div class="hero__socials">
+        <!-- Replace # with your real links -->
+        <a
+          class="btn btn--social"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Telegram</a
+        >
+        <a
+          class="btn btn--social"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Twitter/X</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,236 @@
+<!-- ================= TOKENOMICS (save as partials/tokenomics.html) ================= -->
+<section class="tokenomics" aria-labelledby="token-title" data-tokenomics>
+  <div class="tokenomics__inner">
+    <h2 class="tokenomics__title" id="token-title">Tokenomics</h2>
+
+    <div class="tokenomics__grid">
+      <!-- Interactive donut: click / tap a slice (or a row in the list) -->
+      <div class="donut" data-donut>
+        <svg
+          class="donut__svg"
+          viewBox="0 0 200 200"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <circle class="donut__track" cx="100" cy="100" r="80" />
+          <circle class="donut__ring" cx="100" cy="100" r="58" />
+          <g transform="rotate(-90 100 100)">
+            <circle
+              class="donut__seg"
+              data-i="0"
+              data-name="Fairlaunch"
+              data-pct="40"
+              data-color="#39ff14"
+              cx="100"
+              cy="100"
+              r="80"
+              pathLength="100"
+              style="--c: #39ff14; --len: 39.1; --rest: 60.9; --i: 0"
+              stroke-dashoffset="-0.45"
+            />
+            <circle
+              class="donut__seg"
+              data-i="1"
+              data-name="Private Sale"
+              data-pct="10"
+              data-color="#d4a017"
+              cx="100"
+              cy="100"
+              r="80"
+              pathLength="100"
+              style="--c: #d4a017; --len: 9.1; --rest: 90.9; --i: 1"
+              stroke-dashoffset="-40.45"
+            />
+            <circle
+              class="donut__seg"
+              data-i="2"
+              data-name="Community Rewards"
+              data-pct="20"
+              data-color="#43a047"
+              cx="100"
+              cy="100"
+              r="80"
+              pathLength="100"
+              style="--c: #43a047; --len: 19.1; --rest: 80.9; --i: 2"
+              stroke-dashoffset="-50.45"
+            />
+            <circle
+              class="donut__seg"
+              data-i="3"
+              data-name="CEX partnership"
+              data-pct="10"
+              data-color="#f5f1e6"
+              cx="100"
+              cy="100"
+              r="80"
+              pathLength="100"
+              style="--c: #f5f1e6; --len: 9.1; --rest: 90.9; --i: 3"
+              stroke-dashoffset="-70.45"
+            />
+            <circle
+              class="donut__seg"
+              data-i="4"
+              data-name="Burn"
+              data-pct="10"
+              data-color="#d62828"
+              cx="100"
+              cy="100"
+              r="80"
+              pathLength="100"
+              style="--c: #d62828; --len: 9.1; --rest: 90.9; --i: 4"
+              stroke-dashoffset="-80.45"
+            />
+            <circle
+              class="donut__seg"
+              data-i="5"
+              data-name="Treasure"
+              data-pct="6"
+              data-color="#ff8a3d"
+              cx="100"
+              cy="100"
+              r="80"
+              pathLength="100"
+              style="--c: #ff8a3d; --len: 5.1; --rest: 94.9; --i: 5"
+              stroke-dashoffset="-90.45"
+            />
+            <circle
+              class="donut__seg"
+              data-i="6"
+              data-name="Team"
+              data-pct="4"
+              data-color="#9945ff"
+              cx="100"
+              cy="100"
+              r="80"
+              pathLength="100"
+              style="--c: #9945ff; --len: 3.1; --rest: 96.9; --i: 6"
+              stroke-dashoffset="-96.45"
+            />
+          </g>
+        </svg>
+
+        <div class="donut__center" aria-live="polite">
+          <span class="donut__label" data-label>$PEPEHOOD</span>
+          <span class="donut__value" data-value>100%</span>
+          <span class="donut__hint" data-hint>Tap a slice</span>
+        </div>
+      </div>
+
+      <!-- Same data as buttons: keyboard friendly, and tapping a row updates the donut -->
+      <ul class="alloc">
+        <li>
+          <button
+            class="alloc__item"
+            type="button"
+            data-i="0"
+            aria-pressed="false"
+            style="--c: #39ff14; --pct: 40%; --i: 0"
+          >
+            <span class="alloc__dot" aria-hidden="true"></span>
+            <span class="alloc__name">Fairlaunch</span>
+            <span class="alloc__pct">40%</span>
+            <span class="alloc__bar" aria-hidden="true"
+              ><span class="alloc__fill"></span
+            ></span>
+          </button>
+        </li>
+        <li>
+          <button
+            class="alloc__item"
+            type="button"
+            data-i="1"
+            aria-pressed="false"
+            style="--c: #d4a017; --pct: 10%; --i: 1"
+          >
+            <span class="alloc__dot" aria-hidden="true"></span>
+            <span class="alloc__name">Private Sale</span>
+            <span class="alloc__pct">10%</span>
+            <span class="alloc__bar" aria-hidden="true"
+              ><span class="alloc__fill"></span
+            ></span>
+          </button>
+        </li>
+        <li>
+          <button
+            class="alloc__item"
+            type="button"
+            data-i="2"
+            aria-pressed="false"
+            style="--c: #43a047; --pct: 20%; --i: 2"
+          >
+            <span class="alloc__dot" aria-hidden="true"></span>
+            <span class="alloc__name">Community Rewards</span>
+            <span class="alloc__pct">20%</span>
+            <span class="alloc__bar" aria-hidden="true"
+              ><span class="alloc__fill"></span
+            ></span>
+          </button>
+        </li>
+        <li>
+          <button
+            class="alloc__item"
+            type="button"
+            data-i="3"
+            aria-pressed="false"
+            style="--c: #f5f1e6; --pct: 10%; --i: 3"
+          >
+            <span class="alloc__dot" aria-hidden="true"></span>
+            <span class="alloc__name">CEX partnership</span>
+            <span class="alloc__pct">10%</span>
+            <span class="alloc__bar" aria-hidden="true"
+              ><span class="alloc__fill"></span
+            ></span>
+          </button>
+        </li>
+        <li>
+          <button
+            class="alloc__item"
+            type="button"
+            data-i="4"
+            aria-pressed="false"
+            style="--c: #d62828; --pct: 10%; --i: 4"
+          >
+            <span class="alloc__dot" aria-hidden="true"></span>
+            <span class="alloc__name">Burn</span>
+            <span class="alloc__pct">10%</span>
+            <span class="alloc__bar" aria-hidden="true"
+              ><span class="alloc__fill"></span
+            ></span>
+          </button>
+        </li>
+        <li>
+          <button
+            class="alloc__item"
+            type="button"
+            data-i="5"
+            aria-pressed="false"
+            style="--c: #ff8a3d; --pct: 6%; --i: 5"
+          >
+            <span class="alloc__dot" aria-hidden="true"></span>
+            <span class="alloc__name">Treasure</span>
+            <span class="alloc__pct">6%</span>
+            <span class="alloc__bar" aria-hidden="true"
+              ><span class="alloc__fill"></span
+            ></span>
+          </button>
+        </li>
+        <li>
+          <button
+            class="alloc__item"
+            type="button"
+            data-i="6"
+            aria-pressed="false"
+            style="--c: #9945ff; --pct: 4%; --i: 6"
+          >
+            <span class="alloc__dot" aria-hidden="true"></span>
+            <span class="alloc__name">Team</span>
+            <span class="alloc__pct">4%</span>
+            <span class="alloc__bar" aria-hidden="true"
+              ><span class="alloc__fill"></span
+            ></span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

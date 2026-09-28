@@ -1,0 +1,19 @@
+@import "/assets/css/layout/navbar.css";
+@import "/assets/css/layout/hero.css";
+@import "/assets/css/layout/marquee.css";
+@import "/assets/css/layout/story.css";
+@import "/assets/css/layout/tokenomics.css";
+@import "/assets/css/layout/memes.css";
+@import "/assets/css/layout/footer.css";
+@import "/assets/css/layout/contact.css";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+[data-include="/partials/header.html"] {
+  min-height: 64px;
+}
+[data-include="/partials/footer.html"] {
+  min-height: 120px;
+}

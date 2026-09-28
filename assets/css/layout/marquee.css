@@ -1,0 +1,174 @@
+/* ==========================================================================
+   MARQUEE  ·  assets/css/components/marquee.css
+   Big tilted ticker band over a gold "hazard tape" ribbon. Moves right → left.
+   Uses the tokens and fonts from navbar.css / main.css (fallbacks included).
+   ========================================================================== */
+.marquee {
+  --m-bg: var(--bg, #0e1a12);
+  --m-card: var(--card, #16271b);
+  --m-gold: var(--gold, #d4a017);
+  --m-gold-l: var(--gold-light, #f6d365);
+  --m-red: var(--red, #d62828);
+  --m-neon: var(--neon, #39ff14);
+  --m-text: var(--text, #f5f1e6);
+  --m-font: var(--font-display, "Bangers", Impact, system-ui, sans-serif);
+  --tilt: 2deg; /* mobile tilt; change to 0deg for a flat band */
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(3.5rem, 9vw, 7rem);
+  background:
+    radial-gradient(60% 90% at 50% 50%, rgba(46, 125, 50, 0.28), transparent 70%),
+    var(--m-bg);
+}
+
+/* back ribbon: gold hazard tape tilted the opposite way */
+.marquee::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: -5%;
+  width: 110%;
+  height: clamp(5.5rem, 15vw, 10rem);
+  transform: translateY(-50%) rotate(var(--tilt));
+  background: repeating-linear-gradient(-45deg, var(--m-gold) 0 20px, #3a2c05 20px 40px);
+  box-shadow: 0 0 50px rgba(212, 160, 23, 0.35);
+}
+
+/* front band: dark forest glass with gold rails */
+.marquee__band {
+  position: relative;
+  margin-inline: -5%;
+  overflow: hidden;
+  font-size: clamp(3.5rem, 11vw, 8.5rem); /* the whole section scales from this */
+  transform: rotate(calc(var(--tilt) * -1));
+  background: linear-gradient(180deg, #1b3323, var(--m-card) 45%, #0b150e);
+  border-block: 4px solid var(--m-gold);
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.55),
+    0 0 46px rgba(212, 160, 23, 0.4),
+    0 24px 60px rgba(0, 0, 0, 0.65);
+}
+
+/* slow light sweep */
+.marquee__band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 35%, rgba(255, 255, 255, 0.13) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: marquee-sweep 6s ease-in-out infinite;
+}
+
+.marquee__viewport {
+  overflow: hidden;
+  padding-block: 0.08em;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+/* ---------- Moving track ---------- */
+.marquee__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+/* JS sets --marquee-copies and --marquee-duration, then adds .is-ready */
+.marquee.is-ready .marquee__track {
+  animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
+}
+@keyframes marquee-scroll {
+  to {
+    transform: translate3d(calc(-100% / var(--marquee-copies, 2)), 0, 0); /* right → left, exactly one group */
+  }
+}
+@keyframes marquee-sweep {
+  0%, 55% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* pause: hover (desktop), press-and-hold (touch), or when scrolled offscreen */
+@media (hover: hover) {
+  .marquee__band:hover .marquee__track { animation-play-state: paused; }
+}
+.marquee.is-held .marquee__track { animation-play-state: paused; }
+.marquee.is-offscreen *,
+.marquee.is-offscreen *::after { animation-play-state: paused !important; }
+
+/* ---------- Items ---------- */
+.marquee__group {
+  display: flex;
+  flex: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.marquee__group li {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding-right: 0.6em;
+  white-space: nowrap;
+}
+
+/* red gem separator */
+.marquee__group li::after {
+  content: "";
+  flex: none;
+  width: 0.26em;
+  height: 0.26em;
+  margin-inline: 0.12em;
+  border: 0.03em solid var(--m-gold-l);
+  background: linear-gradient(135deg, #ff7b7b, var(--m-red) 55%, #6d0d0d);
+  box-shadow: 0 0 0.5em rgba(214, 40, 40, 0.8);
+  transform: rotate(45deg);
+  animation: marquee-gem 2.4s ease-in-out infinite;
+}
+@keyframes marquee-gem {
+  50% {
+    transform: rotate(45deg) scale(1.25);
+    box-shadow: 0 0 0.9em rgba(255, 60, 60, 1);
+  }
+}
+
+.marquee__text {
+  font-family: var(--m-font);
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  color: var(--m-text);
+  text-shadow: 0 0.05em 0 rgba(0, 0, 0, 0.65);
+}
+.marquee__text--gold {
+  background: linear-gradient(180deg, var(--m-gold-l) 5%, var(--m-gold) 55%, #9a6c08);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0.05em 0 #4a3403) drop-shadow(0 0 0.3em rgba(212, 160, 23, 0.45));
+}
+.marquee__text--neon {
+  color: var(--m-neon);
+  text-shadow: 0 0.04em 0 #0a3a06, 0 0 0.35em rgba(57, 255, 20, 0.75);
+}
+
+/* ---------- Desktop ---------- */
+@media (min-width: 992px) {
+  .marquee { --tilt: 1.2deg; }
+}
+
+/* ---------- Reduced motion: static, centred, wrapped ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .marquee *,
+  .marquee *::after { animation: none !important; }
+  .marquee__track { width: 100%; }
+  .marquee__group { flex-wrap: wrap; justify-content: center; padding: 0.15em 0.5em; }
+  .marquee__viewport { -webkit-mask-image: none; mask-image: none; }
+}
