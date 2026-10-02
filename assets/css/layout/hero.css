@@ -24,11 +24,12 @@
   display: flex;
   align-items: flex-start;
   min-height: 100svh;
-  padding: calc(var(--nav-h) + 2rem) 1.25rem 3rem;
+  padding: calc(var(--nav-h) + 2rem) 1rem 3rem;
   overflow: hidden;
   background: var(--pr-bg); /* shows while the banner loads */
   color: var(--pr-text);
   font-family: var(--font-body);
+  margin-top: 100px;
 }
 
 /* ---------- Background banner ---------- */
@@ -295,7 +296,66 @@
 }
 
 /* ================= DESKTOP (768px and up) ================= */
+@media (min-width: 250px) {
+  .hero__content {
+    max-width: 18rem;
+    width: 100%;
+  }
+  .hero__tagline {
+    font-size: 1rem;
+  }
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .buy-wrap .btn--buy {
+    font-size: 20px;
+  }
+  .hero__socials .btn--social {
+    font-size: 17px;
+  }
+  .hero__bg img {
+    height: 500px;
+  }
+  .hero {
+    min-height: 80svh;
+  }
+  .marquee {
+    padding-bottom: 30px;
+  }
+  .footer__right {
+    height: 89px;
+  }
+}
+
 @media (min-width: 768px) {
+  .footer__right {
+    height: auto;
+    align-items: flex-start;
+  }
+  .hero__content {
+    max-width: 62rem;
+    width: 100%;
+  }
+  .marquee {
+    padding-block: clamp(3.5rem, 9vw, 7rem);
+  }
+  #hero__title {
+    width: 600px;
+  }
+  .hero__tagline {
+    font-size: 1.25rem;
+  }
+  .hero__title {
+    font-size: 3rem;
+  }
+  .buy-wrap .btn--buy {
+    font-size: 30px;
+  }
+
+  .hero__socials .btn--social {
+    font-size: 2rem;
+  }
   :root {
     --nav-h: 112px;
   }
@@ -304,10 +364,12 @@
     align-items: center;
     /* top + bottom padding so the hero breathes and separates from the next section */
     padding: calc(var(--nav-h) + 4rem) 4rem 7rem;
+    min-height: 100svh;
   }
 
   .hero__bg img {
     object-position: center;
+    height: 900px;
   }
 
   /* Veil moves to the left so Pepe on the right stays bright */
@@ -329,11 +391,6 @@
   .hero__tagline {
     margin-bottom: 1.5rem;
     font-size: 1.75rem;
-  }
-
-  .hero__title {
-    max-width: 14ch; /* keeps the text on the left, away from Pepe */
-    margin-bottom: 3rem;
   }
 
   .hero__actions {
@@ -362,5 +419,12 @@
   .btn--social {
     font-size: 2rem;
     padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer__right {
+    height: auto;
+    align-items: flex-end;
   }
 }
